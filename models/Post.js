@@ -12,9 +12,8 @@ const Schema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'User',
     },
-    img: {
+    imgUrl: {
         type: String,
-        default: 'no img',
     },
 });
 

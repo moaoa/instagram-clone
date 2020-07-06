@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const auth = require('../helpers/auth');
+const axios = require('axios').default;
 
 router.get('/', async (req, res) => {
     const posts = await Post.find().populate('createdBy', 'name _id');
@@ -19,14 +20,14 @@ router.get('/myposts', auth, async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
-    const { title, body } = req.body;
+    const { title, body, imgUrl } = req.body;
+    console.log('img url: ', imgUrl);
+
     if (!title || !body)
         return res.status(400).json({ msg: 'Provide All Fields' });
-    const post = new Post({ title, body, createdBy: req.user });
+    const post = new Post({ title, body, createdBy: req.user, imgUrl });
     try {
         await post.save();
-        console.log(typeof post);
-        console.log(post);
 
         return res.status(201).json({ post });
     } catch (error) {
