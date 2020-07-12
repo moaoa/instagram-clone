@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { auth } from "../apis/index";
+import { auth, upload } from "../apis/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { GlobalContext } from "../App";
 
 export default function SignUp() {
   const history = useHistory();
   const [submitted, setSubmitted] = useState(false);
+  const [img, setImg] = useState(null);
+  const { addUser } = useContext(GlobalContext);
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ email: "", password: "", name: "" }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().max(10),
+        name: Yup.string().max(10).required(),
         email: Yup.string().email("Invalid Email address").required("required"),
         password: Yup.string().min(6).required("required"),
         passwordConfirmation: Yup.string().oneOf(
@@ -22,13 +25,21 @@ export default function SignUp() {
       onSubmit={(values) => {
         const { name, email, password } = values;
         setSubmitted(true);
-        if (!submitted)
-          auth.post("/signup", { name, email, password }).then((res) => {
-            if (res.status === 201) {
-              localStorage.setItem("token", res.data.token);
-              history.push("/");
-            }
-          });
+
+        if (!submitted) console.log(img);
+
+        upload(img).then((imgUrl) => {
+          auth
+            .post("/signup", { name, email, password, imgUrl })
+            .then((res) => {
+              console.log(res);
+
+              if (res.status === 201) {
+                addUser(res.data.user, res.data.token);
+                history.push("/");
+              }
+            });
+        });
       }}
     >
       <div className="auth-card">
@@ -55,15 +66,22 @@ export default function SignUp() {
                 type="password"
               />
               <ErrorMessage name="passwordConfirmation" component="div" />
+              <input
+                name="img"
+                type="file"
+                onChange={(e) => {
+                  setImg(e.target.files[0]);
+                }}
+              />
               <button
                 className="btn waves-effect waves-light #1e88e5 blue darken-1"
                 type="submit"
                 name="action"
               >
-                sign in
+                sign up
               </button>
               <h5>
-                <Link to="/signup">don't have an account ?</Link>
+                <Link to="/signin">don't have an account ?</Link>
               </h5>
             </div>
           </div>

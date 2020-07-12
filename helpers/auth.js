@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 module.exports = (req, res, next) => {
   let token = req.header("Authorization");
+  token = token.replace("Bearer ", "");
 
+  console.log(token);
   if (!token)
     return res.status(401).json({ msg: "No Token autorization denied" });
-
-  token = token.replace("Bearer ", "");
 
   try {
     const decoded = jwt.verify(token, jwtSecret);

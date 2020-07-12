@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { postsApi } from "../apis/index";
+import { postsApi, upload } from "../apis/index";
 import { useHistory } from "react-router-dom";
+import { GlobalContext } from "../App";
 
 export default function CreatePost() {
+  const { addPost } = useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [file, setFile] = useState("");
@@ -12,6 +14,9 @@ export default function CreatePost() {
   const history = useHistory();
 
   useEffect(() => {
+    console.log("useEffect");
+    console.log("imgUrl", imgUrl);
+
     const submitPost = async () => {
       try {
         const result = await postsApi.post("/", {
@@ -19,28 +24,24 @@ export default function CreatePost() {
           body,
           imgUrl,
         });
+        addPost(result.data.post);
         history.push("/");
       } catch (error) {
         console.log(error);
       }
     };
-    submitPost();
+    if (imgUrl) submitPost();
   }, [imgUrl]);
   const handleSubmit = () => {
+    console.log("submitted");
+
     if (!title || !body || !file || loading) return;
-    const formDataBody = new FormData();
-    formDataBody.append("file", file);
-    formDataBody.append("upload_preset", "insta-clone");
-    formDataBody.append("cloud_name", "dncpsh3iw");
+
     setLoading(true);
 
-    axios
-      .post(
-        "https://api.cloudinary.com/v1_1/dncpsh3iw/image/upload",
-        formDataBody
-      )
-      .then((res) => {
-        setImgUrl(res.data.url);
+    upload(file)
+      .then((url) => {
+        setImgUrl(url);
       })
       .catch((e) => console.log(e));
   };

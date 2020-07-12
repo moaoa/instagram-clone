@@ -1,72 +1,89 @@
-@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
 .brand-logo {
-    font-family: 'Grand Hotel', cursive;
-    font-size: 2.8rem !important;
+  font-family: "Grand Hotel", cursive;
+  font-size: 2.8rem !important;
 }
 .px-2 {
-    padding: 0 4rem;
+  padding: 0 4rem;
 }
 
 a {
-    color: black !important;
+  color: black !important;
+}
+.comment {
+  background-color: #7f8c8d;
+  color: #c7c0bd;
+
+  padding: 1rem;
+  color: rgb(170, 165, 165);
 }
 .auth-card {
-    margin-top: 40px;
-    text-align: center;
+  margin-top: 40px;
+  text-align: center;
 }
 .auth-card button {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 .card {
-    width: 500px;
-    margin: 0 auto;
-    padding: 2rem 0;
+  width: 500px;
+  margin: 2rem auto;
+  padding: 2rem 0;
 }
 .card h4 {
-    margin-top: 0.5rem !important;
+  margin-top: 0.5rem !important;
 }
 .input-field {
-    padding: 0 2rem;
+  padding: 0 2rem;
 }
 
 .input-field input:focus {
-    border-bottom: 1px solid #1e88e5 !important;
+  border-bottom: 1px solid #1e88e5 !important;
 }
 .input-field h5 {
-    text-transform: capitalize;
-    font-size: 1.5rem;
-    color: #333 !important;
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  color: #333 !important;
 }
 button {
-    text-transform: capitalize !important;
+  text-transform: capitalize !important;
 }
-
+.icons-box {
+  display: flex;
+  align-items: center;
+}
+.icons-box i {
+  margin-left: 1rem;
+  cursor: pointer;
+}
+.likes-counter {
+  font-weight: 500;
+}
 .profile {
-    padding: 2rem 4rem;
-    margin: 0 2rem;
-    border-bottom: 1px solid #333;
+  padding: 2rem 4rem;
+  margin: 0 2rem;
+  border-bottom: 1px solid #333;
 }
 
 .profile img {
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
 }
 .profile span {
-    margin: 0 1rem;
+  margin: 0 1rem;
 }
 .profile-details {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
 }
 .gallery img {
-    border-radius: 0;
-    justify-self: center;
+  border-radius: 0;
+  justify-self: center;
 }

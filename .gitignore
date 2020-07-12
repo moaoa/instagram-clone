@@ -2,3 +2,5 @@ node_modules
 .tmp.drivedownload
 .vscode
 .env
+fakeServer.js
+db.json

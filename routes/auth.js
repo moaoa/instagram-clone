@@ -6,9 +6,7 @@ const bcrypt = require("bcrypt");
 const generateJwtToken = require("../helpers/gnerateJwtToken");
 
 router.post("/signup", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const name = req.body.name;
+  const { name, password, email, imgUrl } = req.body;
 
   if (!email || !password || !name) {
     return res.status(400).json({ msg: "please include all fields" });
@@ -22,6 +20,7 @@ router.post("/signup", (req, res) => {
       name,
       email,
       password,
+      imgUrl,
     });
 
     newUser.password = bcrypt.hash(password, 10, async (err, hash) => {
@@ -56,7 +55,7 @@ router.post("/signin", async (req, res) => {
     .compare(password, user.password)
     .then((isMatch) => {
       if (isMatch) {
-        const token = gnerateJwtToken({ _id: user._id });
+        const token = generateJwtToken({ _id: user._id });
         return res.json({ user, token });
       } else {
         return res.status(401).json({ msg: "Invalide eamil or password" });

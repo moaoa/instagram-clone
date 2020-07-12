@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { auth } from "../apis/index";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { GlobalContext } from "../App";
 
 export default function SignIn() {
   const [submitted, setSubmitted] = useState(false);
+  const { state, addUser } = useContext(GlobalContext);
+  const history = useHistory();
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -17,9 +20,12 @@ export default function SignIn() {
         const { email, password } = values;
         setSubmitted(true);
         if (!submitted)
-          auth
-            .post("/signin", { email, password })
-            .then((res) => console.log(res));
+          auth.post("/signin", { email, password }).then((res) => {
+            console.log(res);
+            if (!res.status === 200) return;
+            addUser(res.data.user, res.data.token);
+            history.push("/");
+          });
       }}
     >
       <div className="auth-card">
@@ -36,7 +42,7 @@ export default function SignIn() {
                 placeholder="    password"
                 type="password"
               />
-              <ErrorMessage name="password" />
+              <ErrorMessage component="div" name="password" />
               <button
                 className="btn waves-effect waves-light #1e88e5 blue darken-1"
                 type="submit"

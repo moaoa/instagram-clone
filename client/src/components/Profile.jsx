@@ -1,50 +1,47 @@
-import React from 'react';
+import React, { useContext, useEffect } from "react";
+import { GlobalContext } from "../App";
+import { postsApi } from "../apis/index";
 
 export default function Profile() {
-    return (
-        <div className="profile">
-            <div className="profile-details">
-                <div>
-                    <img
-                        src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                        alt=""
-                    />
-                </div>
-                <div>
-                    <h3>user name</h3>
-                    <div>
-                        <span>40 posts</span>
-                        <span>40 followers</span>
-                        <span>40 follewing</span>
-                    </div>
-                </div>
-            </div>
-            <div className="gallery">
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-                <img
-                    src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=625&q=80"
-                    alt=""
-                />
-            </div>
+  const { state, addMyPosts } = useContext(GlobalContext);
+
+  useEffect(() => {
+    postsApi.get("/myposts").then((res) => {
+      console.log(res);
+      if (res.status == 200) {
+        addMyPosts(res.data.posts);
+      } else console.log(res.msg, res.status);
+    });
+  }, []);
+  const url =
+    state.user?.imgUrl ||
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+  return (
+    <div className="profile">
+      <div className="profile-details">
+        <div>
+          <img src={url} alt="user" />
         </div>
-    );
+        <div>
+          <h3>{state.user?.name}</h3>
+          <div>
+            <span>{state.userPosts?.length} posts</span>
+            <span>40 followers</span>
+            <span>40 follewing</span>
+          </div>
+        </div>
+      </div>
+      <div className="gallery">
+        {state.userPosts?.map((post) => (
+          <div key={post._id}>
+            <img src={post.imgUrl} alt="post" />
+            <h4>{post.title}</h4>
+            <h6>{post.body}</h6>
+          </div>
+        ))}
+        {state.userPosts.length === 0 && <div>no posts</div>}
+      </div>
+    </div>
+  );
 }
