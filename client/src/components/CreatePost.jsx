@@ -14,8 +14,6 @@ export default function CreatePost() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("useEffect");
-    console.log("imgUrl", imgUrl);
 
     const submitPost = async () => {
       try {

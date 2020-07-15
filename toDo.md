@@ -22,7 +22,16 @@
 [x] fixed localStorage bug
 [x] comments functionality
 
-[] followers / following functionality
+# 2020/7/13
+
+[x] follow / unfollow functionality backend
+[x] other users page
+
+# 2020/7/14
+
+[x] navigate to other users when clicking on thier name on a post
+[] implement follow / unfollow on cllient side
+
 [] reset password
-[] loading spinner for profile page
-[] created-by in state bug
+[] loading spinner for profile page and for create post page
+[x] created-by in state bug
