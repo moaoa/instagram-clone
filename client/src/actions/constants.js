@@ -6,3 +6,4 @@ export const USER_POSTS = "USER_POSTS";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const FOLLOW_USER = "FOLLOW_USER";

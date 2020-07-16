@@ -30,8 +30,14 @@
 # 2020/7/14
 
 [x] navigate to other users when clicking on thier name on a post
+
+# 2020/7/15
+
 [] implement follow / unfollow on cllient side
+[x] axios header bug
+
+# 2020/7/16
 
 [] reset password
-[] loading spinner for profile page and for create post page
+[] loading spinner for profile page and for create post page and sign up / sign in & userProfile
 [x] created-by in state bug

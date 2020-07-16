@@ -4,7 +4,6 @@ module.exports = (req, res, next) => {
   let token = req.header("Authorization");
   token = token.replace("Bearer ", "");
 
-  console.log(token);
   if (!token)
     return res.status(401).json({ msg: "No Token autorization denied" });
 

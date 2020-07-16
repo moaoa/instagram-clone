@@ -59,7 +59,7 @@ export default function (state = initialState, action) {
       };
 
     case actions.ADD_COMMENT:
-      const obj = {
+      return {
         ...state,
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
@@ -67,6 +67,16 @@ export default function (state = initialState, action) {
         userPosts: state.userPosts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+      };
+
+    case actions.FOLLOW_USER:
+      const obj = {
+        ...state,
+        user: {
+          ...state.user,
+          followings: action.payload.followings,
+          followers: action.payload.followers,
+        },
       };
       console.log(obj);
 
