@@ -30,9 +30,7 @@ app.use(express.json());
 app.use('/auth', authRoute);
 app.use('/posts', postsRoute);
 app.use('/users', auth, usersRoute);
-app.get('/', (req, res) => {
-    res.json({ msg: 'hello' });
-});
+
 const filePath = path.join(__dirname, 'client', 'build');
 
 app.use(express.static(filePath));
