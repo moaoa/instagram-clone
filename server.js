@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 if (process.env.NODE_ENV !== 'production') {
     app.use(require('morgan')('tiny'));
     require('dotenv').config();
@@ -12,6 +13,7 @@ const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
 const usersRoute = require('./routes/users');
 const auth = require('./helpers/auth');
+const { get } = require('http');
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
@@ -31,5 +33,10 @@ app.use('/users', auth, usersRoute);
 app.get('/', (req, res) => {
     res.json({ msg: 'hello' });
 });
+const filePath = path.join(__dirname, 'client', 'build');
 
+app.use(express.static(filePath));
+app.get('*', (req, res) => {
+    res.sendfile(filePath + '/index.html');
+});
 app.listen(port, () => `server runnig on port ${port}`);
