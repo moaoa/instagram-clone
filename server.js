@@ -33,8 +33,11 @@ app.use('/users', auth, usersRoute);
 
 const filePath = path.join(__dirname, 'client', 'build');
 
-app.use(express.static(filePath));
-app.get('*', (req, res) => {
-    res.sendfile(filePath + '/index.html');
-});
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(filePath));
+
+    app.get('*', (req, res) => {
+        res.sendfile(filePath + '/index.html');
+    });
+}
 app.listen(port, () => `server runnig on port ${port}`);
