@@ -3,19 +3,34 @@ import { GlobalContext } from '../App';
 import { postsApi, fakeApi } from '../apis';
 import { Link } from 'react-router-dom';
 
-export default function Home() {
+export default function PostsByFollowing() {
     const [send, setSend] = useState(true);
-    const { state, getPosts, likePost, unLikePost, addComment } = useContext(
+    const [ids, setIds] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const { state, likePost, unLikePost, addComment } = useContext(
         GlobalContext
     );
+    let postsToShow;
+
     useEffect(() => {
-        postsApi.get('/').then((result) => {
-            if (result.status === 200) return getPosts(result.data.posts);
-            else console.log(result);
-        });
-        // fakeApi.get("/").then((res) => {
-        //   if (res.status === 200) return getPosts(res.data.posts);
-        // });
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const { status, data } = await postsApi.get(
+                    '/postsByFollowing'
+                );
+                setLoading(false);
+                console.log(status);
+                console.log(data.posts);
+                if (status === 200) {
+                    setIds(data.posts);
+                }
+            } catch (error) {
+                setLoading(false);
+                console.log(error);
+            }
+        };
+        fetchData();
     }, []);
 
     const sendLikeRequest = (postId) => {
@@ -52,10 +67,12 @@ export default function Home() {
             })
             .catch(console.log);
     };
-
+    if (loading) return <div>loading</div>;
+    postsToShow = state.posts.filter((post) => ids.includes(post._id));
+    if (!postsToShow.length) return <div>no posts</div>;
     return (
         <div className="home">
-            {state.posts.map((post, i) => (
+            {postsToShow.map((post, i) => (
                 <div className="card" key={i}>
                     <div className="card-image">
                         <Link to={`/userProfile/${post.createdBy?._id}`}>

@@ -15,6 +15,21 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
+router.get('/search/:searchTerm', async (req, res) => {
+    const { searchTerm } = req.params;
+    try {
+        const users = await User.find()
+            .where('name')
+            .regex(`^${searchTerm}`)
+            .select('name _id')
+            .exec();
+        res.json({ users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: error.stack });
+    }
+});
+
 router.put('/follow/:userId', async (req, res) => {
     const { userId } = req.params;
 

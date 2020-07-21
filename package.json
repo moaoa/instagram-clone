@@ -18,7 +18,9 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.21"
+    "mongoose": "^5.9.21",
+    "nodemailer": "^6.4.10",
+    "nodemailer-sendgrid-transport": "^0.2.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

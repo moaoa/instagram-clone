@@ -16,6 +16,8 @@ const Schema = mongoose.Schema({
     imgUrl: {
         type: String,
     },
+    resetToken: String,
+    expireToken: Date,
     followers: [{ type: ObjectId, ref: 'User' }],
     followings: [{ type: ObjectId, ref: 'User' }],
 });
