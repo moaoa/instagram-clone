@@ -106,7 +106,10 @@ export default function Home() {
                                 type="text"
                                 placeholder="add comment"
                             />
-                            <button type="submit" className="btn">
+                            <button
+                                type="submit"
+                                className="btn #1e88e5 blue darken-1"
+                            >
                                 <i className="material-icons">add</i>
                             </button>
                         </form>

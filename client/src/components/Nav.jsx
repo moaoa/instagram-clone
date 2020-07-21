@@ -65,7 +65,10 @@ export default function Nav() {
                                 <i
                                     onClick={opneModal}
                                     className="material-icons "
-                                    style={{ color: 'black' }}
+                                    style={{
+                                        color: 'black',
+                                        cursor: 'pointer',
+                                    }}
                                 >
                                     search
                                 </i>
@@ -127,7 +130,7 @@ export default function Nav() {
                         <Form>
                             <div className={'card'}>
                                 <div className="input-field">
-                                    <h2>search for users</h2>
+                                    <h4>search for users</h4>
 
                                     <Field
                                         name="name"
@@ -162,7 +165,10 @@ export default function Nav() {
                     </div>
                 </Formik>
 
-                <button className="btn" onClick={closeModal}>
+                <button
+                    className="btn #1e88e5 blue darken-1"
+                    onClick={closeModal}
+                >
                     close
                 </button>
             </Modal>

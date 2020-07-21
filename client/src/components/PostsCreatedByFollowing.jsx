@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { GlobalContext } from '../App';
 import { postsApi, fakeApi } from '../apis';
 import { Link } from 'react-router-dom';
+import Loader from './loader';
 
 export default function PostsByFollowing() {
     const [send, setSend] = useState(true);
@@ -67,9 +68,10 @@ export default function PostsByFollowing() {
             })
             .catch(console.log);
     };
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loader />;
     postsToShow = state.posts.filter((post) => ids.includes(post._id));
     if (!postsToShow.length) return <div>no posts</div>;
+
     return (
         <div className="home">
             {postsToShow.map((post, i) => (
@@ -123,7 +125,7 @@ export default function PostsByFollowing() {
                                 type="text"
                                 placeholder="add comment"
                             />
-                            <button type="submit" className="btn">
+                            <button type="submit" className="btn ">
                                 <i className="material-icons">add</i>
                             </button>
                         </form>
