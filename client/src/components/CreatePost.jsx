@@ -40,18 +40,15 @@ export default function CreatePost() {
             .then((url) => {
                 setImgUrl(url);
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                console.log(e);
+                setLoading(false);
+            });
     };
     if (loading)
         return (
             <div className="loader">
-                <Loader
-                    type="Puff"
-                    color="#00BFFF"
-                    height={100}
-                    width={100}
-                    timeout={3000}
-                />
+                <Loader type="Puff" color="#00BFFF" height={100} width={100} />
             </div>
         );
     return (

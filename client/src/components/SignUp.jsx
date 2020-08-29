@@ -41,14 +41,16 @@ export default function SignUp() {
                         email,
                         password,
                         imgUrl,
-                    }).then((res) => {
-                        console.log(res);
+                    })
+                        .then((res) => {
+                            console.log(res);
 
-                        if (res.status === 201) {
-                            addUser(res.data.user, res.data.token);
-                            history.push('/');
-                        }
-                    });
+                            if (res.status === 201) {
+                                addUser(res.data.user, res.data.token);
+                                history.push('/');
+                            }
+                        })
+                        .finally(() => setLoading(false));
                 });
             }}
         >

@@ -9,13 +9,19 @@ export default function Profile() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        postsApi.get('/myposts').then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                addMyPosts(res.data.posts);
+        postsApi
+            .get('/myposts')
+            .then((res) => {
+                console.log(res);
+                if (res.status == 200) {
+                    addMyPosts(res.data.posts);
+                } else {
+                    console.log(res.msg, res.status);
+                }
+            })
+            .finally(() => {
                 setLoading(false);
-            } else console.log(res.msg, res.status);
-        });
+            });
     }, []);
     const url =
         state.user?.imgUrl ||
