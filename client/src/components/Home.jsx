@@ -13,9 +13,6 @@ export default function Home() {
             if (result.status === 200) return getPosts(result.data.posts);
             else console.log(result);
         });
-        // fakeApi.get("/").then((res) => {
-        //   if (res.status === 200) return getPosts(res.data.posts);
-        // });
     }, []);
 
     const sendLikeRequest = (postId) => {
@@ -25,7 +22,7 @@ export default function Home() {
             .put('/like', { postId })
             .then((res) => {
                 console.log(res);
-                if (res.status === 200) return likePost(res.data);
+                if (res.status === 200) likePost(res.data);
                 setSend(true);
             })
             .catch((e) => {
