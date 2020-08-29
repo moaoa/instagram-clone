@@ -1,0 +1,18 @@
+.myModal {
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    background-color: white;
+    height: 100vh;
+    padding: 1.5rem;
+}
+
+.openModal {
+    transform: translateX(0);
+}
+
+.closeModal {
+    transform: translateX(-150vw);
+}

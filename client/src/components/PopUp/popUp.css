@@ -1,0 +1,17 @@
+.popUp {
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    left: 50vw;
+    top: 50vh;
+    z-index: 200;
+    background-color: white;
+    padding: 1.5rem;
+}
+
+.open {
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.close {
+    transform: translateX(-50%) translateY(-200vh);
+}

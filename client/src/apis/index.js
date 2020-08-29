@@ -66,8 +66,8 @@ export const usersApi = axios.create({
 });
 usersApi.interceptors.request.use(
     (req) => {
-        postsApi.defaults.headers.Authorization = localStorage.getItem('token');
-        if (!usersApi.defaults.headers.Authorization)
+        // postsApi.defaults.headers.Authorization = localStorage.getItem('token');
+        if (!usersApi.defaults.headers.Authorization?.replace('Bearer ', ''))
             throw { msg: 'token is not available' };
         return req;
     },

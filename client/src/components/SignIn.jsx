@@ -9,7 +9,7 @@ import Loader from './loader';
 export default function SignIn() {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { state, addUser } = useContext(GlobalContext);
+    const { addUser } = useContext(GlobalContext);
     const history = useHistory();
     if (loading) return <Loader />;
     return (
@@ -26,12 +26,25 @@ export default function SignIn() {
                 setSubmitted(true);
                 setLoading(true);
                 if (!submitted)
-                    auth.post('/signin', { email, password }).then((res) => {
-                        console.log(res);
-                        if (!res.status === 200) return;
-                        addUser(res.data.user, res.data.token);
-                        history.push('/');
-                    });
+                    auth.post('/signin', { email, password })
+                        .then((res) => {
+                            setLoading(false);
+                            setSubmitted(false);
+
+                            console.log(res);
+                            if (res.status === 200) {
+                                addUser(res.data.user, res.data.token);
+                                history.push('/');
+                            } else {
+                                history.push('/signin');
+                            }
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            setLoading(false);
+                            setSubmitted(false);
+                            // history.push('/signin');
+                        });
             }}
         >
             <div className="auth-card">

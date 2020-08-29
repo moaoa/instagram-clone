@@ -20,13 +20,13 @@ a {
     margin-top: 40px;
     text-align: center;
 }
-.auth-card button {
-    margin-top: 2rem;
-}
+
 .card {
-    width: 500px;
     margin: 2rem auto;
     padding: 2rem 0;
+}
+.auth-card button {
+    margin-top: 2rem;
 }
 .card h3 {
     padding-left: 1.5rem;
@@ -102,4 +102,25 @@ input::placeholder {
 }
 .btn {
     background-color: #1e88e5 !important;
+}
+.nemuTogller {
+    cursor: pointer;
+}
+.nemuTogller i {
+    color: black !important;
+}
+
+.mobileSidebar li {
+    list-style: none;
+    padding: 1rem 0;
+}
+@media (min-width: 500px) {
+    .card {
+        width: 60vw;
+    }
+}
+@media (min-width: 993px) {
+    .nemuTogller {
+        display: none;
+    }
 }

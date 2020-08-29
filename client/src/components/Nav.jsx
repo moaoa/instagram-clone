@@ -2,52 +2,41 @@ import React, { useContext, useState } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../App';
-import Modal from 'react-modal';
+import Modal from './Modal/Modal';
+import PopUp from './PopUp/PopUp';
 
 import { usersApi } from '../apis';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        color: 'black',
-    },
-};
-
-Modal.setAppElement('#root');
 export default function Nav() {
     const { submitted, setSubmitted } = useState(false);
-    let subtitle;
     const [isOpen, setIsOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const { state, logOut } = useContext(GlobalContext);
+    const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
-    function opneModal() {
-        setIsOpen(true);
+    function toggleModal() {
+        setIsOpen((prevState) => !prevState);
     }
-    function closeModal() {
-        setIsOpen(false);
-    }
-    function afterOpenModal() {
-        subtitle.style.color = '#f00';
+    function toggleSidebar() {
+        setSidebarIsOpen((prevState) => !prevState);
     }
 
     return (
         <nav>
             <div className="nav-wrapper white px-2 ">
+                <div className="nemuTogller right " onClick={toggleSidebar}>
+                    {' '}
+                    <i class="material-icons">menu</i>
+                </div>
                 <Link
                     to={state.user ? '/' : 'signup'}
                     className="brand-logo left"
                 >
                     Instagram
                 </Link>
-                <ul id="nav-mobile" className="right ">
+                <ul id="nav-mobile" className="right hide-on-med-and-down">
                     {!state.user && (
                         <>
                             <li>
@@ -63,7 +52,7 @@ export default function Nav() {
                         <>
                             <li>
                                 <i
-                                    onClick={opneModal}
+                                    onClick={toggleModal}
                                     className="material-icons "
                                     style={{
                                         color: 'black',
@@ -96,17 +85,8 @@ export default function Nav() {
                     )}
                 </ul>
             </div>
-            <Modal
-                isOpen={isOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="examle modal"
-            >
-                <h2
-                    style={{ color: 'black' }}
-                    ref={(_subtitle) => (subtitle = _subtitle)}
-                ></h2>
+            <PopUp isOpen={isOpen} clicked={toggleModal}>
+                <h2 style={{ color: 'black' }}></h2>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={Yup.object({
@@ -154,7 +134,7 @@ export default function Nav() {
                                 <li
                                     className="collection-item"
                                     key={Date.now()}
-                                    onClick={closeModal}
+                                    onClick={toggleModal}
                                 >
                                     <Link to={`/userProfile/${user._id}`}>
                                         {user.name}
@@ -167,10 +147,61 @@ export default function Nav() {
 
                 <button
                     className="btn #1e88e5 blue darken-1"
-                    onClick={closeModal}
+                    onClick={toggleModal}
                 >
                     close
                 </button>
+            </PopUp>
+
+            <Modal isOpen={sidebarIsOpen} clicked={toggleSidebar}>
+                <div className="mobileSidebar">
+                    {!state.user && (
+                        <>
+                            <li>
+                                <Link to="/signin">Sign in</Link>
+                            </li>
+                            <li>
+                                <Link to="/signup">Sign Up</Link>
+                            </li>
+                        </>
+                    )}
+
+                    {state.user && (
+                        <>
+                            <li>
+                                <i
+                                    onClick={toggleModal}
+                                    className="material-icons "
+                                    style={{
+                                        color: 'black',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    search
+                                </i>
+                            </li>
+                            <li>
+                                <Link to="/profile">Profile</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/create-post">Create Post</Link>
+                            </li>
+                            <li>
+                                <Link to="/postsByFollowing">Explore</Link>
+                            </li>
+
+                            <li>
+                                <button
+                                    className="btn #757575 grey darken-1"
+                                    onClick={logOut}
+                                >
+                                    log out
+                                </button>
+                            </li>
+                        </>
+                    )}
+                </div>
             </Modal>
         </nav>
     );
