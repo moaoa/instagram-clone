@@ -39,8 +39,8 @@ export default function Profile() {
                     <h3>{state.user?.name}</h3>
                     <div>
                         <span>{state.userPosts?.length} posts</span>
-                        <span>{state.user.followers.length} followers</span>
-                        <span>{state.user.followings.length} follewing</span>
+                        <span>{state.user?.followers.length} followers</span>
+                        <span>{state.user?.followings.length} follewing</span>
                     </div>
                 </div>
             </div>

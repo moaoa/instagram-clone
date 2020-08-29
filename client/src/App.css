@@ -3,6 +3,9 @@
     font-family: 'Grand Hotel', cursive;
     font-size: 2.8rem !important;
 }
+* {
+    box-sizing: border-box;
+}
 .px-2 {
     padding: 0 4rem;
 }
@@ -67,8 +70,8 @@ button {
 }
 
 .profile img {
-    width: 170px;
-    height: 170px;
+    width: 40vh;
+    background-size: cover;
     border-radius: 50%;
 }
 .profile span {
@@ -76,18 +79,20 @@ button {
 }
 .profile-details {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 3rem;
 }
 .gallery img {
     border-radius: 0;
     justify-self: center;
+}
+.gallery > div {
+    margin: 0 auto;
 }
 .loader {
     display: flex;
@@ -119,8 +124,14 @@ input::placeholder {
         width: 60vw;
     }
 }
+@media (max-width: 500px) {
+    .profile {
+        padding: 2rem 0;
+    }
+}
 @media (min-width: 993px) {
     .nemuTogller {
         display: none;
+        margin: 0%;
     }
 }
