@@ -54,13 +54,15 @@ router.put('/like', auth, (req, res) => {
             $push: { likes: req.user._id },
         },
         { new: true }
-    ).exec((err, result) => {
-        if (err) {
-            return res.status(422).json({ msg: err });
-        }
-        acceptLikeRequest = true;
-        res.json(result);
-    });
+    )
+        .populate('createdBy', 'name _id')
+        .exec((err, result) => {
+            if (err) {
+                return res.status(422).json({ msg: err });
+            }
+            acceptLikeRequest = true;
+            res.json(result);
+        });
 });
 
 router.put('/unlike', auth, (req, res) => {
@@ -70,14 +72,16 @@ router.put('/unlike', auth, (req, res) => {
             $pull: { likes: req.user._id },
         },
         { new: true }
-    ).exec((err, result) => {
-        if (err) {
-            console.log(err);
+    )
+        .populate('createdBy', 'name _id')
+        .exec((err, result) => {
+            if (err) {
+                console.log(err);
 
-            return res.status(422).json({ msg: err });
-        }
-        res.json(result);
-    });
+                return res.status(422).json({ msg: err });
+            }
+            res.json(result);
+        });
 });
 
 router.put('/comment', auth, (req, res) => {
